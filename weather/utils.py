@@ -1,6 +1,7 @@
 from datetime import timedelta
 from typing import Any
 
+import pandas as pd
 import requests
 import requests_cache
 
@@ -47,3 +48,9 @@ def get_weather_info(
     }
     response = requests.get(WEATHER_URL, params=params)
     return response.json()
+
+
+def convert_data_to_dataframe(data: dict[str, Any]) -> str:
+    hourly_data = data['hourly']
+    dataframe = pd.DataFrame(hourly_data)
+    return dataframe.to_html(index=False)
