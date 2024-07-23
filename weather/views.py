@@ -17,5 +17,7 @@ def get_weather_page(request: HttpRequest, city: str) -> HttpResponse:
     latitude, longitude = get_city_coordinates(city)
     weather_info = get_weather_info(latitude, longitude)
     return render(
-        request, 'weather/city.html', context={'weather_info': weather_info}
+        request,
+        'weather/city.html',
+        context={'weather_info': weather_info, 'city': city}
     )
