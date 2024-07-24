@@ -4,11 +4,15 @@ from typing import Any
 import pandas as pd
 import requests
 import requests_cache
+from django.contrib.auth.models import User
+
 
 from .constants import (
     COORDINATES_FORMAT, COORDINATES_LIMIT, COORDINATES_URL, WEATHER_DETAILS,
     WEATHER_URL
 )
+from .models import City
+
 
 requests_cache.install_cache(
     'city_coordinates_cache', expire_after=timedelta(hours=24)
@@ -51,3 +55,9 @@ def convert_data_to_dataframe(data: dict[str, Any]) -> str:
     dataframe = pd.DataFrame(hourly_data)
     dataframe.columns = [f'{col} ({units[col]})' for col in dataframe.columns]
     return dataframe.to_html(index=False)
+
+
+def save_city_to_db(city: str, user: User) -> None:
+    new_city = City(city_title=city.title())
+    new_city.save()
+    new_city.user.add(user)

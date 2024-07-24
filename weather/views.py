@@ -3,7 +3,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from .utils import (
-    convert_data_to_dataframe, get_city_coordinates, get_weather_info
+    convert_data_to_dataframe, get_city_coordinates, get_weather_info,
+    save_city_to_db
 )
 
 
@@ -19,6 +20,7 @@ def get_weather_page(request: HttpRequest, city: str) -> HttpResponse:
     latitude, longitude = get_city_coordinates(city)
     weather_info = get_weather_info(latitude, longitude)
     dataframed_weather_info = convert_data_to_dataframe(weather_info)
+    save_city_to_db(city, request.user)
     return render(
         request,
         'weather/city.html',
