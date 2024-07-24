@@ -21,15 +21,10 @@ def get_city_coordinates(city: str) -> tuple[float | None, float | None]:
         'format': COORDINATES_FORMAT,
         'limit': COORDINATES_LIMIT
     }
-    response = requests.get(COORDINATES_URL, params=params)
-
-    # DELETE IT!!!
-    if response.from_cache:
-        print(f"Using cached response for {city}")
-    else:
-        print(f"Fetching new response for {city}")
-    # DELETE IT!!!
-
+    headers = {
+        'User-Agent': 'MyWeatherApp/1.0 (smirnovds1990@gmail.com)'
+    }
+    response = requests.get(COORDINATES_URL, params=params, headers=headers)
     data = response.json()
     if data:
         latitude = data[0]['lat']
@@ -52,5 +47,7 @@ def get_weather_info(
 
 def convert_data_to_dataframe(data: dict[str, Any]) -> str:
     hourly_data = data['hourly']
+    units = data['hourly_units']
     dataframe = pd.DataFrame(hourly_data)
+    dataframe.columns = [f'{col} ({units[col]})' for col in dataframe.columns]
     return dataframe.to_html(index=False)
