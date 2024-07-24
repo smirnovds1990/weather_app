@@ -3,6 +3,14 @@
   Статисктика
 {% endblock %}
 {% block content %}
-  <div class="container">Ваша статистика:</div>
-  <div class="container">Общая статистика:</div>
+  <div class="container">
+    Ваша статистика:{% for city in user_cities %}
+      {{ city.city_title }} - {{ city.count }}
+    {% endfor %}
+  </div>
+  <div class="container">
+    Общая статистика:{% for city in all_cities %}
+      {{ city.city_title }} - {{ city.count }}
+    {% endfor %}
+  </div>
 {% endblock %}

@@ -1,7 +1,9 @@
+from django.db.models import Count
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from .models import City
 from .utils import (
     convert_data_to_dataframe, get_city_coordinates, get_weather_info,
     save_city_to_db
@@ -29,9 +31,13 @@ def get_weather_page(request: HttpRequest, city: str) -> HttpResponse:
 
 
 def get_statistics(request: HttpRequest):
-    id = request.user.id
-    user_cities = ...
-    all_cities = ...
+    user = request.user
+    user_cities = user.cities.values('city_title').annotate(
+        count=Count('city_title')
+    ).order_by('-count')
+    all_cities = City.objects.values('city_title').annotate(
+        count=Count('city_title')
+    ).order_by('-count')
     return render(
         request,
         'weather/statistics.html',

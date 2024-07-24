@@ -22,3 +22,6 @@ class City(models.Model):
         verbose_name='Дата запроса',
         auto_now_add=True
     )
+
+    def __str__(self) -> str:
+        return self.city_title
