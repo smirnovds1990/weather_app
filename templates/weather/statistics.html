@@ -4,13 +4,16 @@
 {% endblock %}
 {% block content %}
   <div class="container">
-    Ваша статистика:{% for city in user_cities %}
-      {{ city.city_title }} - {{ city.count }}
+    <h5>Ваша статистика (количество запросов):</h5>{% for city in user_cities %}
+      {{ city.city_title }} - {{ city.count }}<br />
     {% endfor %}
   </div>
   <div class="container">
-    Общая статистика:{% for city in all_cities %}
-      {{ city.city_title }} - {{ city.count }}
+    <hr />
+  </div>
+  <div class="container">
+    <h5>Общая статистика (количество запросов):</h5>{% for city in all_cities %}
+      {{ city.city_title }} - {{ city.count }}<br />
     {% endfor %}
   </div>
 {% endblock %}
