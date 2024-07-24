@@ -24,3 +24,17 @@ def get_weather_page(request: HttpRequest, city: str) -> HttpResponse:
         'weather/city.html',
         context={'weather_info': dataframed_weather_info, 'city': city}
     )
+
+
+def get_statistics(request: HttpRequest):
+    id = request.user.id
+    user_cities = ...
+    all_cities = ...
+    return render(
+        request,
+        'weather/statistics.html',
+        context={
+            'user_cities': user_cities,
+            'all_cities': all_cities
+        }
+    )

@@ -7,5 +7,6 @@ app_name = 'weather'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('<city>/', views.get_weather_page, name='city')
+    path('statistics/', views.get_statistics, name='statistics'),
+    path('<city>/', views.get_weather_page, name='city'),
 ]
