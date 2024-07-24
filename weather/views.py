@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
@@ -18,6 +19,7 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'weather/index.html')
 
 
+@login_required
 def get_weather_page(request: HttpRequest, city: str) -> HttpResponse:
     latitude, longitude = get_city_coordinates(city)
     weather_info = get_weather_info(latitude, longitude)
@@ -30,6 +32,7 @@ def get_weather_page(request: HttpRequest, city: str) -> HttpResponse:
     )
 
 
+@login_required
 def get_statistics(request: HttpRequest):
     user = request.user
     user_cities = user.cities.values('city_title').annotate(
