@@ -9,6 +9,7 @@ numpy==2.0.1
 pandas==2.2.2
 platformdirs==4.2.2
 python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
 pytz==2024.1
 requests==2.32.3
 requests-cache==1.2.1
