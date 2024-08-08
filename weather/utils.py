@@ -50,6 +50,10 @@ def get_weather_info(
 
 
 def convert_data_to_dataframe(data: dict[str, Any]) -> str:
+    """
+    Convert weather data to Pandas dataframe to be able to
+    show user-friendly on the page.
+    """
     hourly_data = data['hourly']
     units = data['hourly_units']
     dataframe = pd.DataFrame(hourly_data)

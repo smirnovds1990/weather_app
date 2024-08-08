@@ -34,8 +34,8 @@ def get_weather_page(request: HttpRequest, city: str) -> HttpResponse:
 
 @login_required
 def get_statistics(request: HttpRequest):
-    user = request.user
-    user_cities = user.cities.values('city_title').annotate(
+    current_user = request.user
+    current_user_cities = current_user.cities.values('city_title').annotate(
         count=Count('city_title')
     ).order_by('-count')
     all_cities = City.objects.values('city_title').annotate(
@@ -45,7 +45,7 @@ def get_statistics(request: HttpRequest):
         request,
         'weather/statistics.html',
         context={
-            'user_cities': user_cities,
+            'current_user_cities': current_user_cities,
             'all_cities': all_cities
         }
     )
